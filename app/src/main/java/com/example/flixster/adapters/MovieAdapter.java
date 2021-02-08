@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
 
@@ -78,7 +79,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                 // else imageURL = poster image
                 imageURL = movie.getPosterPath();
             }
-            Glide.with(context).load(imageURL).into(ivPoster);
+
+            // For animated loading placeholder
+            // pass activity name
+            Glide.with(context)
+                    .load(imageURL)
+                    .placeholder(R.drawable.placeholder) // Animated progress bar
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) // Don't store cache
+                    .into(ivPoster);
+
+            // Glide.with(context).load(imageURL).into(ivPoster);
         }
     }
 }
