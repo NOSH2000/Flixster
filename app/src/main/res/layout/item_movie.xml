@@ -3,10 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#000000"
+    android:background="@color/light_pink"
     android:layout_width="match_parent"
-    android:padding="15dp"
+    android:padding="5dp"
+    android:layout_margin="20dp"
     android:layout_height="wrap_content">
+
+    <!--    android:alpha="55"-->
+    <!--    android:background="#37AEE4"-->
+    <!--    android:backgroundTint="#FEFBDE"-->
 
     <ImageView
         android:id="@+id/ivPoster"
@@ -24,7 +29,7 @@
         android:layout_marginTop="0dp"
         android:layout_toEndOf="@+id/ivPoster"
         android:paddingRight="10dp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
         android:typeface="serif"
@@ -39,7 +44,7 @@
         android:layout_marginTop="4dp"
         android:layout_toEndOf="@+id/ivPoster"
         android:paddingRight="10dp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:typeface="serif"
         tools:text="Wonder Woman comes into conflict with the Soviet Union during the Cold War in the 1980s and finds a formidable foe by the name of the Cheetah." />
 </RelativeLayout>

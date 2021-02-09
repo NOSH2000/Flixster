@@ -10,5 +10,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovies"
         android:layout_width="match_parent"
+        android:background="@mipmap/flower"
         android:layout_height="match_parent" />
 </RelativeLayout>

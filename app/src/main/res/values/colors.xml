@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Define your colors in `res/values/colors.xml` -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +8,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="simple_pink">#BEA1013E</color>
+<!--    <color name="light_pink">#A4F4005D</color>-->
+    <color name="light_pink">#52F4005D</color>
 </resources>
