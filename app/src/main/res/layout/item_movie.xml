@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/light_pink"
+    android:id="@+id/container"
     android:layout_width="match_parent"
-    android:padding="5dp"
+    android:layout_height="wrap_content"
     android:layout_margin="20dp"
-    android:layout_height="wrap_content">
+    android:background="@color/light_pink"
+    android:padding="5dp">
 
     <!--    android:alpha="55"-->
     <!--    android:background="#37AEE4"-->

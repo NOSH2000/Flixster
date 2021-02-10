@@ -1,18 +1,24 @@
 package com.example.flixster.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.flixster.DetailActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -57,6 +63,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
+        RelativeLayout container;
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
@@ -66,6 +73,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvOverview = itemView.findViewById(R.id.tvOverview);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            container = itemView.findViewById(R.id.container);
         }
 
         public void bind(Movie movie) {
@@ -89,6 +97,24 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                     .into(ivPoster);
 
             // Glide.with(context).load(imageURL).into(ivPoster);
+
+            // 1. Register click on the whole row
+            //// To do that, we need to get the reference to the whole container containing the image and texts
+            container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 2. Navigate to a new activity on tap
+                    // first parameter is the context, second is the class of the activity to launch
+                    Intent i = new Intent(context, DetailActivity.class);
+
+                    // put "extras" into the bundle for access in the second activity
+                    // i.putExtra("title", movie.getTitle());
+                    i.putExtra("movie", Parcels.wrap(movie));
+
+                    // brings up the second activity
+                    context.startActivity(i);
+                }
+            });
         }
     }
 }
