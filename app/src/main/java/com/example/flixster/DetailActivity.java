@@ -91,19 +91,23 @@ public class DetailActivity extends YouTubeBaseActivity {
              */
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
                 Log.d("TAG", "onInitializationSuccess");
+
                 // do any work here to cue video, play video, etc.
                 if(wasRestored){
                     // Resume from where it stopped
                     youTubePlayer.play();
                 } else {
-                    youTubePlayer.cueVideo(youtubeKey);
+                    if(rating > 5.0){
+                        // If the movie is popular, automatically start playing it
+                        Log.d("TAG", "Rating: " + rating);
+                        youTubePlayer.loadVideo(youtubeKey);
+
+                    } else {
+                        youTubePlayer.cueVideo(youtubeKey);
+                    }
                     youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
                     youTubePlayer.addFullscreenControlFlag(youTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE);
                 }
-
-//                if(rating > 5.0){
-//                    Log.i("TAG", "Rating: " + rating);
-//                }
             }
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
