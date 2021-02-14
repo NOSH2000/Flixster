@@ -18,7 +18,7 @@ public class Movie {
     String posterPath;
     String title;
     String overview;
-    double rating;
+    static double rating;
 
     // Empty constructor needed by the Parceler library
     public Movie(){}
@@ -62,7 +62,7 @@ public class Movie {
         return overview;
     }
 
-    public double getRating() {
+    public static double getRating() {
         return rating;
     }
 }

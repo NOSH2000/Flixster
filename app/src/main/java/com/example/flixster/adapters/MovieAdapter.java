@@ -24,6 +24,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
@@ -88,12 +89,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                 imageURL = movie.getPosterPath();
             }
 
-            // For animated loading placeholder
+            // For animated loading placeholder and Rounded Corners
+            int radius = 30; // corner radius, higher value = more rounded
+            int margin = 10; // crop margin, set to 0 for corners with no crop
+
             // pass activity name
             Glide.with(context)
                     .load(imageURL)
                     .placeholder(R.drawable.placeholder) // Animated progress bar
                     .diskCacheStrategy(DiskCacheStrategy.NONE) // Don't store cache
+                    .transform(new RoundedCornersTransformation(radius, margin))
                     .into(ivPoster);
 
             // Glide.with(context).load(imageURL).into(ivPoster);

@@ -24,11 +24,12 @@ public class DetailActivity extends YouTubeBaseActivity {
     // created with sayara email
     public static final String YOUTUBE_API_KEY = "AIzaSyClrzWPVaqql0-Px6wUuvvNt9p9XUjtkXo";
     public static final String VIDEOS_URL = "https://api.themoviedb.org/3/movie/%d/videos?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
-
+    public static final String TAG = "DetailActivity";
     TextView tvTitle;
     TextView tvOverview;
     RatingBar ratingBar;
     YouTubePlayerView youTubePlayerView;
+    static double rating = Movie.getRating();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,21 +61,21 @@ public class DetailActivity extends YouTubeBaseActivity {
                     String site = results.getJSONObject(0).getString("site");
                     if(site.equalsIgnoreCase("YouTube")){
                         String youtubeKey = results.getJSONObject(0).getString("key");
-                        Log.d("DetailActivity", "youtubeKey " + youtubeKey + " site: " + site);
+                        Log.d("TAG", "youtubeKey " + youtubeKey + " site: " + site);
                         initializeYoutube(youtubeKey);
                     } else {
-                        Log.e("DetailActivity", "The site is not YouTube");
+                        Log.e("TAG", "The site is not YouTube");
                         return;
                     }
                 } catch (JSONException e) {
-                    Log.e("DetailActivity", "Failed to parse JSON", e);
+                    Log.e("TAG", "Failed to parse JSON", e);
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(int i, Headers headers, String response, Throwable throwable) {
-                Log.d("DetailActivity", "onFailure");
+                Log.d("TAG", "onFailure");
             }
         });
     }
@@ -82,14 +83,31 @@ public class DetailActivity extends YouTubeBaseActivity {
     private void initializeYoutube(String youtubeKey) {
         youTubePlayerView.initialize(YOUTUBE_API_KEY, new YouTubePlayer.OnInitializedListener() {
             @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                Log.d("DetailActivity", "onInitializationSuccess");
+            /*
+                wasRestored: Whether the player was restored from a previously saved state,
+                as part of the YouTubePlayerView or YouTubePlayerFragment restoring its state.
+                true usually means playback is resuming from where the user expects it would,
+                and that a new video should not be loaded.
+             */
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
+                Log.d("TAG", "onInitializationSuccess");
                 // do any work here to cue video, play video, etc.
-                youTubePlayer.cueVideo(youtubeKey);
+                if(wasRestored){
+                    // Resume from where it stopped
+                    youTubePlayer.play();
+                } else {
+                    youTubePlayer.cueVideo(youtubeKey);
+                    youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                    youTubePlayer.addFullscreenControlFlag(youTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE);
+                }
+
+//                if(rating > 5.0){
+//                    Log.i("TAG", "Rating: " + rating);
+//                }
             }
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                Log.d("DetailActivity", "onInitializationFailure");
+                Log.d("TAG", "onInitializationFailure");
             }
         });
     }
