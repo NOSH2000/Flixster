@@ -29,7 +29,7 @@ public class DetailActivity extends YouTubeBaseActivity {
     TextView tvOverview;
     RatingBar ratingBar;
     YouTubePlayerView youTubePlayerView;
-    static double rating = Movie.getRating();
+    boolean movieRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class DetailActivity extends YouTubeBaseActivity {
         // String title = getIntent().getStringExtra("title");
         // tvTitle.setText(title);
         Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+        movieRating = movie.getIsPopular();
         tvTitle.setText(movie.getTitle());
         tvOverview.setText(movie.getOverview());
         ratingBar.setRating((float)movie.getRating());
@@ -61,21 +62,21 @@ public class DetailActivity extends YouTubeBaseActivity {
                     String site = results.getJSONObject(0).getString("site");
                     if(site.equalsIgnoreCase("YouTube")){
                         String youtubeKey = results.getJSONObject(0).getString("key");
-                        Log.d("TAG", "youtubeKey " + youtubeKey + " site: " + site);
+                        Log.d(TAG, "youtubeKey " + youtubeKey + " site: " + site);
                         initializeYoutube(youtubeKey);
                     } else {
-                        Log.e("TAG", "The site is not YouTube");
+                        Log.e(TAG, "The site is not YouTube");
                         return;
                     }
                 } catch (JSONException e) {
-                    Log.e("TAG", "Failed to parse JSON", e);
+                    Log.e(TAG, "Failed to parse JSON", e);
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(int i, Headers headers, String response, Throwable throwable) {
-                Log.d("TAG", "onFailure");
+                Log.d(TAG, "onFailure");
             }
         });
     }
@@ -90,19 +91,20 @@ public class DetailActivity extends YouTubeBaseActivity {
                 and that a new video should not be loaded.
              */
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-                Log.d("TAG", "onInitializationSuccess");
-
+                Log.d(TAG, "onInitializationSuccess");
+                Movie movie;
                 // do any work here to cue video, play video, etc.
                 if(wasRestored){
                     // Resume from where it stopped
                     youTubePlayer.play();
                 } else {
-                    if(rating > 5.0){
+                    if(movieRating){
                         // If the movie is popular, automatically start playing it
-                        Log.d("TAG", "Rating: " + rating);
+                        Log.d(TAG, "Popular: " + movieRating);
                         youTubePlayer.loadVideo(youtubeKey);
 
                     } else {
+                        Log.d(TAG, "Popular: " + movieRating);
                         youTubePlayer.cueVideo(youtubeKey);
                     }
                     youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
@@ -111,7 +113,7 @@ public class DetailActivity extends YouTubeBaseActivity {
             }
             @Override
             public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                Log.d("TAG", "onInitializationFailure");
+                Log.d(TAG, "onInitializationFailure");
             }
         });
     }
