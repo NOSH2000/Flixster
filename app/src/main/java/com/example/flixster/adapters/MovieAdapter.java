@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.FitCenter;
 import com.bumptech.glide.request.target.Target;
 import com.example.flixster.DetailActivity;
 import com.example.flixster.R;
@@ -100,8 +101,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                 imageURL = movie.getPosterPath();
             }
 
-//            // For animated loading placeholder and Rounded Corners
-            int radius = 30; // corner radius, higher value = more rounded
+            // For animated loading placeholder and Rounded Corners
+            int radius = 10; // corner radius, higher value = more rounded
             int margin = 0; // crop margin, set to 0 for corners with no crop
 
             // pass activity name
@@ -109,16 +110,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                     .load(imageURL)
                     .placeholder(R.drawable.placeholder) // Animated progress bar
                     .diskCacheStrategy(DiskCacheStrategy.NONE) // Don't store cache
+                    .transform(new FitCenter(), new RoundedCornersTransformation(radius, margin))
                     .error(R.drawable.placeholder)
                     .into(ivPoster);
-//
+
 //            Glide.with(context)
 //                    .load(imageUrl)
 //                    .transform(new RoundedCorners(radius))
 //                    .transform(new RoundedCornersTransformation(radius, margin))
 //                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-////
 //                    .into(ivPoster);
+
             // Glide.with(context).load(imageURL).into(ivPoster);
 
             // 1. Register click on the whole row
