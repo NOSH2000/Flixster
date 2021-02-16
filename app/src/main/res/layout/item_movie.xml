@@ -38,6 +38,7 @@
     <TextView
         android:id="@+id/tvOverview"
         android:layout_width="wrap_content"
+        android:transitionName="overview"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
         android:layout_marginStart="7dp"
@@ -50,6 +51,7 @@
 
     <TextView
         android:id="@+id/tvTitle"
+        android:transitionName="movieTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

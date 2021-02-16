@@ -1,5 +1,6 @@
 package com.example.flixster.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -25,6 +26,9 @@ import org.parceler.Parcels;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -137,7 +141,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                     i.putExtra("movie", Parcels.wrap(movie));
 
                     // brings up the second activity
-                    context.startActivity(i);
+                    // context.startActivity(i);
+
+                    // to animate multiple elements from the source view hierarchy, use Pair<View, String>
+                    // transitionName name set in item_movie.xml and activity_detail.xml
+                    Pair<View, String> title = Pair.create(tvTitle, ViewCompat.getTransitionName(tvTitle));
+                    Pair<View, String> overview = Pair.create(tvOverview, "overview");
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation((Activity) context, title, overview );
+
+                    // brings up the second activity and plays the transition
+                    context.startActivity(i, options.toBundle());
                 }
             });
         }
